@@ -14,16 +14,34 @@ def fetch(student_id, login: str = None, path: Path = None):
 
     try:
         outs, errs = process.communicate(timeout=30)
+        outs, errs = outs.decode('utf-8'), errs.decode('utf-8')
 
     except Exception as e:
         process.kill()
         print(f'While processing {student_id}, occur {e}')
 
-    outs, errs = outs.decode('utf-8'), errs.decode('utf-8')
+        outs, errs = '', 'Failed'
 
     if not outs and errs:
         if 'already exists' in errs:
             status = 'exists'
+            process = subprocess.Popen(['git', 'pull'], cwd=str(path.joinpath(str(student_id))), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            try:
+                outs, errs = process.communicate(timeout=30)
+                outs, errs = outs.decode('utf-8'), errs.decode('utf-8')
+            
+            except Exception as e:
+                process.kill()
+                print(f'While processing {student_id}, occur {e}')
+
+            if 'Already up to date.' in outs:
+                status = 'up to date'
+            elif 'but no such ref was fetched' in errs:
+                status = 'empty'
+            else:
+                status = 'pulled'
+
         elif 'not found' in errs:
             status = 'not-found'
 

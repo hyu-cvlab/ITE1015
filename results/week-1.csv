@@ -1,0 +1,256 @@
+StudentId,check-directory,check-files,check-makefile,make,run-execution
+2020023445,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020043281,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a is called
+function b is called
+"
+2020070164,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020017429,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","funcion a called
+funcion b changed!
+"
+2016049907,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020064302,pass,"pass
+pass
+pass
+pass
+pass",pass,"g++ -o main a.o b.o main.o
+","function a called
+function b called!
+"
+2020031603,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called!
+function b called!
+"
+2020078822,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b changed!
+"
+2020038104,False,False,False,Failed,Failed
+2020030819,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020068331,pass,"pass
+pass
+pass
+pass
+pass",pass,"g++ -o main a.o b.o main.o
+Makefile:2: recipe for target 'main' failed
+",
+2017029443,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020059525,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b changed
+"
+2020003563,pass,"pass
+pass
+pass
+pass
+pass",pass,"g++ -c -o b.o b.cc
+Makefile:8: recipe for target 'b.o' failed
+",
+2020060091,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+functon b changed
+"
+2020076608,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020081830,pass,False,False,,
+2020097010,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","fucntion a called
+fucntion b which has changed called
+"
+2020034739,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called
+"
+2020028377,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called
+"
+2020094148,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020026880,False,False,False,Failed,Failed
+2016056599,False,False,False,Failed,Failed
+2020079234,False,False,False,Failed,Failed
+2020087183,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020048868,False,False,False,Failed,Failed
+2020091676,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called!
+function b changed!
+"
+2020028604,pass,"pass
+pass
+pass
+pass
+pass",pass,,"Hello World!
+"
+2020022660,False,False,False,Failed,Failed
+2020015050,False,False,False,Failed,Failed
+2020061176,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","Function a called
+Function b called
+"
+2020018159,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b is changed!
+"
+2020090791,False,False,False,Failed,Failed
+2020047301,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b is changed
+"
+2020031112,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020014975,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function_b changed!
+"
+2020008886,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
+2020056480,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called!
+function b called!
+"
+2020063045,False,False,False,Failed,Failed
+2020078768,pass,"pass
+pass
+pass
+pass
+pass",pass,"g++ -o main a.o b.o main.o
+Makefile:2: recipe for target 'main' failed
+",
+2020049861,False,False,False,Failed,Failed
+2020088859,False,False,False,Failed,Failed
+2020070837,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b changed!
+"
