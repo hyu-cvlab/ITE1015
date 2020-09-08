@@ -4,10 +4,15 @@ from functools import partial
 from collections import Counter
 from multiprocessing import Pool
 import subprocess
+
+from tqdm import tqdm, trange
 import pandas as pd 
 
 
-def fetch(student_id, login: str = None, path: Path = None):
+def fetch(student_id: int, login: str = None, path: Path = None) \
+            -> dict:
+            
+    print(f'Processing {student_id} ...')
     command = f'git clone https://{login}@hconnect.hanyang.ac.kr/2020_ite1015_12522/{student_id}.git {str(path.joinpath(str(student_id)))}'
     process = subprocess.Popen(command.split(' '), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     status = 'ok'

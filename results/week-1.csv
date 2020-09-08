@@ -178,7 +178,14 @@ pass
 pass",pass,,"Hello World!
 "
 2020022660,False,False,False,Failed,Failed
-2020015050,False,False,False,Failed,Failed
+2020015050,pass,"pass
+pass
+pass
+pass
+pass",pass,"make: 'main' is up to date.
+","function a called
+function b called!
+"
 2020061176,pass,"pass
 pass
 pass
