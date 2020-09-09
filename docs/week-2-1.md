@@ -1,13 +1,19 @@
-# Create Software Programming Assignment (week-2)
+# Creative Software Programming Assignment (week-2)
 
 Every assignment will be announced on **Thursday** and should be sumitted by next **Tuesday**.
 
-In this week **Handed out will be Sep 10, 2019, Due Sep 15, 2020**
+In this week **Handed out will be Sep 10, 2020, Due Sep 15, 2020**
 
 ### Submit your assignment only through the [hconnect GitLab](https://hconnect.hanyang.ac.kr)
 
-1. Your assignment should be `week-2` directory.
+1. Your assignment should be in `week-2` directory.
 2. Commit & Push to the [hconnect GitLab](https://hconnect.hanyang.ac.kr) when you done.
+
+## Topics
+
+1. I/O
+2. Pointer
+3. Structure
 
 ## 1. I/O
 
@@ -70,8 +76,7 @@ When a variable is declared, the memory needed to store its value is assigned a 
 // file: pointer.cc
 #include <iostream>
 
-int main()
-{
+int main() {
     int var = 129;
     // int* is type for point of int
     // So, A* is type for point of A
@@ -155,3 +160,13 @@ int main() {
 
 - http://www.cplusplus.com/
 
+**Notice**
+
+1. Week-2 assignment will be announce in Thursday (Sep 10, 2020)
+2. The code we practiced today is not an assignment, it is a process necessary to solve the assignment that is being submitted tomorrow.
+3. In order to facilitate non-face-to-face classes, questions are frequently asked through chat rooms. (https://open.kakao.com/o/glEhaRtc, or mailto: maytryark@gmail.com)
+
+
+```c++
+
+```
