@@ -1,6 +1,9 @@
 {
     "name": "week-1 repository check",
-    "commands": [
+    "entry": "run-execution",
+    "globals": {
+        "cwd": "./week-1"
+    }, "commands": [
         {
             "name": "check-directory",
             "command": "if [ -d './week-1' ]; then echo 'exists'; fi;",
@@ -16,7 +19,7 @@
                 "if [ -f 'b.cc' ]; then echo 'exists'; fi;",
                 "if [ -f 'a.h' ]; then echo 'exists'; fi;",
                 "if [ -f 'b.h' ]; then echo 'exists'; fi;"
-            ], "cwd": "./week-1",
+            ],
             "expect": [
                 "exists", 
                 "exists",
@@ -30,19 +33,30 @@
                 "check-directory"
             ],
             "command": "if [ -f 'Makefile' ]; then echo 'exists'; fi;",
-            "cwd": "./week-1",
             "expect": "exists"
         }, {
-            "name": "make",
+            "name": "make-clean",
             "requires": [
-                "check-files", "check-makefile"
-            ], "command": "make",
-            "cwd": "./week-1"
+                "check-files",
+                "check-makefile"
+            ],
+            "command": "make clean",
+            "failed": "make-manual-clean"
+        }, {
+            "name": "make-manual-clean",
+            "requires": [
+                "check-files",
+                "check-makefile"
+            ],
+            "command": "rm *.o; rm main;"
+        }, {
+            "name": "make",
+            "requires": ["make-clean"],
+            "command": "make"
         }, {
             "name": "run-execution",
             "requires": ["make"],
-            "command": "./main",
-            "cwd": "./week-1"
+            "command": "./main"
         }
     ]
 }

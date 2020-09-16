@@ -1,0 +1,43 @@
+{
+    "name": "week-2 Assignment",
+    "entry": ["check-a", "check-b"],
+    "globals": {
+        "cwd": "./week-2"
+    },
+    "commands": [{
+            "name": "exist-a",
+            "command": "if [ -f 'the-starry-night.cc' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "build-a",
+            "requires": "exist-a",
+            "command": "g++ the-starry-night.cc -o $temp$/a.out",
+            "expect": ""
+        }, {
+            "name": "run-a",
+            "requires": "build-a",
+            "command": "for f in $assignments$/a-*.in ; do $temp$/a.out < $f > $temp$/$(basename ${f%.*}.out) ; done"
+        }, {
+            "name": "check-a",
+            "requires": "run-a",
+            "command": "for f in $assignments$/a-*.out ; do if ! diff $f $temp$/$(basename $f) -q; then echo $(basename $f) wrong; fi; done"
+        }, {
+            "name": "exist-b",
+            "command": "if [ -f 'contacts.cc' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "build-b",
+            "requires": "exist-b",
+            "command": "g++ contacts.cc -o $temp$/b.out",
+            "expect": ""
+        }, {
+            "name": "run-b",
+            "requires": "build-b",
+            "command": "for f in $assignments$/b-*.in ; do $temp$/b.out < $f > $temp$/$(basename ${f%.*}.out) ; done"
+        }, {
+            "name": "check-b",
+            "requires": "run-b",
+            "command": "for f in $assignments$/b-*.out ; do if ! diff $f $temp$/$(basename $f) -q; then echo $(basename $f) wrong; fi; done"
+        }
+    ]
+}

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple, Any, Union
 import argparse
 from pathlib import Path
 from functools import partial
@@ -11,66 +11,94 @@ import re
 import pandas as pd 
 
 
+def variable_inject(obj: Union[object, dict], tar: str)\
+        -> str:
+    def getter(key):
+        if isinstance(obj, dict):
+            return obj.get(key[1:-1], key)
+        elif isinstance(obj, object):
+            return getattr(obj, key[1:-1], key)
+
+    target = ''
+    while True:
+        match = re.search('\$([^\s]+?)\$', tar)
+        if match is None:
+            target = target + tar
+            break
+
+        b, e = match.span()
+        target = target + tar[:b] + getter(match.group())
+        tar = tar[e:]
+
+    return target
+
 class Test:
     def __init__(self, test: dict, variable: dict, verbose: bool = True):
         self.name = 'test-name'
         self.requires = []
         self.command = []
-        self.cwd = ''
+        self.failed = []
+        self.expect = None
+
         self.verbose = verbose
 
         self.__dict__.update(test)
 
-        if not isinstance(self.requires, list):
-            self.requires = [self.requires]
+        self.requires = self.package(self.requires)
+        self.command = self.package(self.command)
+        self.failed = self.package(self.failed)
 
-        if not isinstance(self.command, list):
-            self.command = [self.command]
-
-        if hasattr(self, 'expect'):
-            if not isinstance(self.expect, list):
-                self.expect = [self.expect]
-        else:
+        if self.expect is None:
             self.expect = [None] * len(self.command)
+        elif not isinstance(self.expect, list):
+            self.expect = [self.expect]
 
         for key, value in variable.items():
-            setattr(self, key, self.variable_inject(value))
+            if not hasattr(self, key):
+                setattr(self, key, variable_inject(self, value))
+        
+        self.command = list(map(partial(variable_inject, self), self.command))
+        
+    @staticmethod
+    def package(variable: Any)\
+            -> List[Any]:
+        if not isinstance(variable, list):
+            variable = [variable]
 
-    def variable_inject(self, command: str):
-        while True:
-            match = re.search('\$(.+?)\$', command)
-            if match is None:
-                break
-            command = command[:match.start()] + getattr(self, match.group()[1:-1], '') + command[match.end():]
+        return variable
 
-        return command
+    def run_handler(self, command_expect: Tuple[str, str])\
+            -> Tuple[str, str]:
 
-    def run(self, *args, **kwargs):
+        command, expect = command_expect
+        status, message = 'pass', ''
+
+        try:
+            process = subprocess.Popen(command, cwd=getattr(self, 'cwd', ''), shell=True,
+                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            outs, errs = process.communicate(timeout=30)
+            outs, errs = outs.decode('utf-8'), errs.decode('utf-8')
+
+        except Exception as e:
+            outs, errs = 'failed', str(e)
+
+        if expect is None:
+            status = 'failed' if outs else 'pass'
+            message = outs or errs
+            
+        elif errs or outs.strip() != expect.strip():
+            status = 'failed'
+            message = errs
+        
+        return status, message
+
+    def run(self, *args, **kwargs)\
+            -> Tuple[List[str], List[str]]:
+
         if self.verbose:
             print(f'Test run: {self.name}')
 
-        results = []
-
-        for command, expect in zip(map(self.variable_inject, self.command), self.expect):
-
-            try:
-                process = subprocess.Popen(command, cwd=self.cwd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                outs, errs = process.communicate(timeout=30)
-                outs, errs = outs.decode('utf-8'), errs.decode('utf-8')
-
-            except Exception as e:
-                outs, errs = 'Failed', str(e)
-
-
-            if expect is None:
-                results.append(outs)
-            else:
-                if errs or outs.strip() != expect.strip():
-                    return False
-                else:
-                    results.append('pass')
-
-        return results
+        return zip(*map(self.run_handler, zip(self.command, self.expect)))
 
 
 class TestManager:
@@ -80,40 +108,53 @@ class TestManager:
             self.content = json.load(f)
 
         self.name = self.content.get('name', 'Test')
+        variable = {key: variable_inject(self.content.get('globals', {}), value)
+                    for key, value in variable.items()}
+
         self.tests = {test.name: test for test in 
-                      [Test(t, variable, verbose=verbose) for t in self.content.get('commands', [])]}
+                      [Test(t, variable, verbose=verbose) 
+                       for t in self.content.get('commands', [])]}
+        self.entry = self.content.get('entry', self.tests)
+        if not isinstance(self.entry, list):
+            self.entry = [self.entry]
+
         self.results = {test: None for test in self.tests}
 
         if verbose:
             print(f'Test: {self.name} is loaded')
             print(f'Test includes {len(self.tests)} tests')
 
-    def run_handler(self, test: Test):
+    def run_handler(self, test: Test)\
+            -> Tuple[int, str]:
+
         if isinstance(test, str):
             test = self.tests[test]
 
         if self.results[test.name] is None:
-            all(map(self.run_handler, test.requires))
-            self.results[test.name] = test.run()
+            any(map(self.run_handler, test.requires))
+            self.results[test.name] = tuple(test.run())
 
-        return True
-
-    def run(self, *args, **kwargs):
-        all(map(self.run_handler, self.tests.values()))
+    def run(self, *args, **kwargs)\
+            -> List[str]:
+        any(map(self.run_handler, self.entry))
 
         return self.results
 
 
-def test(student_id, test: None, path: Path = None):
+def test(student_id, test: None, path: Path = None)\
+        -> Tuple[int, List[str]]:
+
+    temp = Path('./temp').joinpath(str(student_id))
+    temp.mkdir(exist_ok=True, parents=True)
+
     results = TestManager(test, {
+        'assignments': str(Path('./assignments').joinpath('$cwd$').absolute()),
         'uid': str(student_id),
         'cwd': f'{path}/$uid$/$cwd$',
+        'temp': str(temp.absolute()),
     }, verbose=False).run()
 
-    return (
-        student_id,
-        results,
-    )
+    return student_id, results
 
 
 def main(args: argparse.Namespace):
