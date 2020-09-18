@@ -21,7 +21,7 @@ def variable_inject(obj: Union[object, dict], tar: str)\
 
     target = ''
     while True:
-        match = re.search('\$([^\s]+?)\$', tar)
+        match = re.search(r'\$([^\s]+?)\$', tar)
         if match is None:
             target = target + tar
             break
