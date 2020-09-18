@@ -42,6 +42,12 @@ student_t find(int id);
 size_t size();
 ```
 
+**Helps**
+
+You haven't learned it, but you might think that the variables you need to use are already declared. Think of the `students` and `m_size` variables defined globally anywhere in the function you need to implement.
+
+In remove operation, you can explicitly express that it has removed by marking the student id as an unusable value such as -1.
+
 
 ```python
 
