@@ -40,7 +40,7 @@ If the integer number $N$ ($1 \leq N \leq 100$) is given, write a program that s
 
 int main() {
     int N;
-    std::cin << N;
+    std::cin >> N;
     
     // your code here
     
@@ -105,7 +105,7 @@ struct student_t {
 
 int main() {
     int N, M;
-    std::cin << N;
+    std::cin >> N;
     
     // write code here
     // You need to declare student_type as an array.
@@ -116,15 +116,15 @@ int main() {
         std::string input_name;
         std::string input_phone;
         
-        std::cin << input_id;
-        std::cin << input_name;
-        std::cin << input_phone;
+        std::cin >> input_id;
+        std::cin >> input_name;
+        std::cin >> input_phone;
         
         // write code here
         // put the entered information into the declared student information.
     }
     
-    std::cin << M;
+    std::cin >> M;
     
     // write code here
     // run M-loops
