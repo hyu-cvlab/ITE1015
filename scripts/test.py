@@ -48,10 +48,8 @@ class Test:
         self.command = self.package(self.command)
         self.failed = self.package(self.failed)
 
-        if self.expect is None:
-            self.expect = [None] * len(self.command)
-        elif not isinstance(self.expect, list):
-            self.expect = [self.expect]
+        if not isinstance(self.expect, list):
+            self.expect = [self.expect] * len(self.command)
 
         for key, value in variable.items():
             if not hasattr(self, key):

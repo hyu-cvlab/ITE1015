@@ -1,0 +1,28 @@
+{
+    "name": "week-3 Assignment",
+    "entry": "exist-files",
+    "globals": {
+        "cwd": "./week-3/contacts"
+    }, "commands": [{
+            "name": "exist-week-3-dir",
+            "command": "if [ -d './week-3' ]; then echo 'exists'; fi;",
+            "cwd": ".",
+            "expect": "exists"
+        }, {
+            "name": "exist-contacts-dir",
+            "requires": "exist-week-3-dir",
+            "command": "if [ -d './contacts' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "exist-files",
+            "requires": "exist-contacts-dir",
+            "command": [
+                "if [ -f 'contacts.cc' ]; then echo 'exists'; fi;",
+                "if [ -f 'contacts.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'student.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'utility.h' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }
+    ]
+}
