@@ -53,11 +53,15 @@ class Test:
         if not isinstance(self.expect, list):
             self.expect = [self.expect] * len(self.command)
 
+        cwd = getattr(self, 'cwd', '')
+        if cwd.startswith('.'):
+            setattr(self, 'cwd', f"{variable.get('path_prefix', '')}/{getattr(self, 'cwd')}")
+
         for key, value in variable.items():
             if not hasattr(self, key):
                 setattr(self, key, variable_inject(self, value))
             else:
-                setattr(self, key, variable_inject(variable, getattr(self, key)))
+                setattr(self, key, variable_inject(self, variable_inject(variable, getattr(self, key))))
         
         self.command = list(map(partial(variable_inject, self), self.command))
         
@@ -139,6 +143,10 @@ class TestManager:
             any(map(self.run_handler, test.requires))
             self.results[test.name] = tuple(test.run())
 
+            status, *_ = zip(*self.results[test.name])
+            if not all(state == 'pass' or state == '' for state in status):
+                any(map(self.run_handler, test.failed))
+
     def run(self, *args, **kwargs)\
             -> List[str]:
         any(map(self.run_handler, self.entry))
@@ -155,7 +163,8 @@ def test(student_id, test: None, path: Path = None)\
     results = TestManager(test, {
         'assignments': str(Path('./assignments').joinpath('$cwd$').absolute()),
         'uid': str(student_id),
-        'cwd': f'{path}/$uid$/$cwd$',
+        'path_prefix': f'{path}/$uid$',
+        'cwd': f'$path_prefix$/$cwd$',
         'temp': str(temp.absolute()),
     }, verbose=False).run()
 

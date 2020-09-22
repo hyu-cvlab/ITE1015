@@ -5,13 +5,24 @@
         "cwd": "./week-3/contacts"
     }, "commands": [{
             "name": "exist-week-3-dir",
-            "command": "if [ -d '../../week-3' ]; then echo 'exists'; fi;",
+            "cwd": "./",
+            "command": "if [ -d 'week-3' ]; then echo 'exists'; fi;",
             "expect": "exists"
         }, {
             "name": "exist-contacts-dir",
+            "cwd": "./week-3",
             "requires": "exist-week-3-dir",
-            "command": "if [ -d '../contacts' ]; then echo 'exists'; fi;",
-            "expect": "exists"
+            "command": "if [ -d 'contacts' ]; then echo 'exists'; fi;",
+            "expect": "exists",
+            "failed": "directory-mismatch"
+        }, {
+            "name": "directory-mismatch",
+            "cwd": "./week-3",
+            "command": [
+                "cp -r $assignments$/* $temp$",
+                "cp contacts.cc $temp$",
+                "cp contacts.h $temp$"
+            ]
         }, {
             "name": "exist-files",
             "requires": "exist-contacts-dir",
