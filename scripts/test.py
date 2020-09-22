@@ -19,6 +19,9 @@ def variable_inject(obj: Union[object, dict], tar: str)\
         elif isinstance(obj, object):
             return getattr(obj, key[1:-1], key)
 
+    if isinstance(tar, list):
+        return [variable_inject(obj, t) for t in tar]
+
     target = ''
     while True:
         match = re.search(r'\$([^\s]+?)\$', tar)
@@ -41,7 +44,6 @@ class Test:
         self.expect = None
 
         self.verbose = verbose
-
         self.__dict__.update(test)
 
         self.requires = self.package(self.requires)
@@ -54,6 +56,8 @@ class Test:
         for key, value in variable.items():
             if not hasattr(self, key):
                 setattr(self, key, variable_inject(self, value))
+            else:
+                setattr(self, key, variable_inject(variable, getattr(self, key)))
         
         self.command = list(map(partial(variable_inject, self), self.command))
         
@@ -70,7 +74,6 @@ class Test:
 
         command, expect = command_expect
         status, message = 'pass', ''
-
         try:
             process = subprocess.Popen(command, cwd=getattr(self, 'cwd', ''), shell=True,
                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -81,7 +84,11 @@ class Test:
             outs, errs = 'failed', str(e)
 
         if expect is None:
-            status = 'failed' if outs else 'pass'
+            if hasattr(self, 'pass') and getattr(self, 'pass', False):
+                status = 'pass'
+            else:
+                status = 'failed' if outs else 'pass'
+
             message = outs or errs
             
         elif errs or outs.strip() != expect.strip():

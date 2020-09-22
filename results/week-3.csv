@@ -1,2 +1,2 @@
-StudentId,exist-week-3-dir,exist-contacts-dir,exist-files
-2019170229,"(('failed',), ('',))","(('failed',), ('',))","(('pass', 'pass', 'pass', 'pass'), ('', '', '', ''))"
+StudentId,exist-week-3-dir,exist-contacts-dir,exist-files,copy,make,test-add,test-find,test-remove,test-size,test-update
+2019170229,"(('pass',), ('',))","(('pass',), ('',))","(('pass', 'pass', 'pass', 'pass'), ('', '', '', ''))","(('pass', 'pass', 'pass'), ('', '', ''))","(('pass',), ('g++ -std=c++11 -c -o contacts.o contacts.cc\ng++ -std=c++11 -o tests/add.out tests/add.cc contacts.o\ng++ -std=c++11 -o tests/remove.out tests/remove.cc contacts.o\ng++ -std=c++11 -o tests/update.out tests/update.cc contacts.o\ng++ -std=c++11 -o tests/find.out tests/find.cc contacts.o\ng++ -std=c++11 -o tests/size.out tests/size.cc contacts.o\n',))","(('pass',), ('',))","(('pass',), ('',))","(('pass',), ('',))","(('pass',), ('',))","(('pass',), ('',))"

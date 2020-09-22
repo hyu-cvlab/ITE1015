@@ -1,17 +1,16 @@
 {
     "name": "week-3 Assignment",
-    "entry": "exist-files",
+    "entry": ["test-add", "test-find", "test-remove", "test-size", "test-update"],
     "globals": {
         "cwd": "./week-3/contacts"
     }, "commands": [{
             "name": "exist-week-3-dir",
-            "command": "if [ -d './week-3' ]; then echo 'exists'; fi;",
-            "cwd": ".",
+            "command": "if [ -d '../../week-3' ]; then echo 'exists'; fi;",
             "expect": "exists"
         }, {
             "name": "exist-contacts-dir",
             "requires": "exist-week-3-dir",
-            "command": "if [ -d './contacts' ]; then echo 'exists'; fi;",
+            "command": "if [ -d '../contacts' ]; then echo 'exists'; fi;",
             "expect": "exists"
         }, {
             "name": "exist-files",
@@ -23,6 +22,45 @@
                 "if [ -f 'utility.h' ]; then echo 'exists'; fi;"
             ],
             "expect": "exists"
+        }, {
+            "name": "copy",
+            "requires": "exist-files",
+            "command": [
+                "cp -r $assignments$/* $temp$",
+                "cp contacts.cc $temp$",
+                "cp contacts.h $temp$"
+            ]
+        }, {
+            "name": "make",
+            "requires": "copy",
+            "cwd": "$temp$",
+            "command": "make all",
+            "pass": true
+        }, {
+            "name": "test-add",
+            "requires": "make",
+            "cwd": "$temp$",
+            "command": "./tests/add.out"
+        }, {
+            "name": "test-find",
+            "requires": "make",
+            "cwd": "$temp$",
+            "command": "./tests/find.out"
+        }, {
+            "name": "test-remove",
+            "requires": "make",
+            "cwd": "$temp$",
+            "command": "./tests/remove.out"
+        }, {
+            "name": "test-size",
+            "requires": "make",
+            "cwd": "$temp$",
+            "command": "./tests/size.out"
+        }, {
+            "name": "test-update",
+            "requires": "make",
+            "cwd": "$temp$",
+            "command": "./tests/update.out"
         }
     ]
 }
