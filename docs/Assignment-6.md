@@ -23,7 +23,7 @@ The List class has a special node called **head**. The next of head node will po
 ![Linked List](https://www.geeksforgeeks.org/wp-content/uploads/gq/2013/03/Linkedlist.png)
 
 
-```python
+```c++
 #include <string>
 #include <functional>
 
@@ -96,7 +96,7 @@ You can start by copying the previously created list.h file to double_linked_lis
     - double_linked_list.h
 
 
-```python
+```c++
 template <typename T>
 class Node {
 public:
@@ -112,6 +112,37 @@ public:
 ```
 
 
-```python
+```c++
+#include <string>
+#include <functional>
+
+#include "double_linked_node.h"
+
+template <typename T>
+class List {
+public:
+    List() : count(0) {
+        head = new Node<T>(0, nullptr, nullptr);
+        tail = new Node<T>(0, nullptr, nullptr);
+
+        head->next = tail;
+        tail->prev = head;
+    }
+    ~List() {
+        // TODO: write your code here
+        // release remain nodes before delete head node
+        delete head;
+        delete tail;
+    }
+
+    // ...
+
+private:
+    Node<T>* head;
+    Node<T>* tail;
+    size_t count;
+    
+    // OPTIONAL: you can write helper functions
+};
 
 ```
