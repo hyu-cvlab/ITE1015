@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/jiun/workspace/ITE1015/assignments/week-6/build",
+  "command": "/usr/bin/clang++    -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=gnu++11 -o CMakeFiles/main.dir/main.cc.o -c /Users/jiun/workspace/ITE1015/assignments/week-6/main.cc",
+  "file": "/Users/jiun/workspace/ITE1015/assignments/week-6/main.cc"
+}
+]

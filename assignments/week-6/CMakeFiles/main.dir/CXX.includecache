@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/jiun/workspace/ITE1015/assignments/week-6/list.h
+string
+-
+functional
+-
+node.h
+/Users/jiun/workspace/ITE1015/assignments/week-6/node.h
+
+/Users/jiun/workspace/ITE1015/assignments/week-6/main.cc
+iostream
+-
+cassert
+-
+list.h
+/Users/jiun/workspace/ITE1015/assignments/week-6/list.h
+
+/Users/jiun/workspace/ITE1015/assignments/week-6/node.h
+

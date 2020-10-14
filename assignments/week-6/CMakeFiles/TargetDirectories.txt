@@ -1,0 +1,3 @@
+/Users/jiun/workspace/ITE1015/assignments/week-6/CMakeFiles/rebuild_cache.dir
+/Users/jiun/workspace/ITE1015/assignments/week-6/CMakeFiles/edit_cache.dir
+/Users/jiun/workspace/ITE1015/assignments/week-6/CMakeFiles/main.dir
