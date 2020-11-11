@@ -11,9 +11,10 @@ In this week **Handed out will be Nov 5, 2020, Due Nov 10, 2020**
 
 ## Topics
 
-1. Practices
+1. Practices-1
+2. Practices-2
 
-## 1. Practices
+## 1. Practices-1
 
 We learned about polymorphism and inheritance until the previous hour.
 Therefore, we will practice implementing a program using this. Write a program that works as follows:
@@ -88,6 +89,58 @@ class Circle ...
 
 ```c++
 // shape-main.cc
+
+#include <iostream>
+
+int main() {
+    
+}
+```
+
+## Pratice-2
+
+Write a program that works as follows:
+
+1.	Class **Animal** has two member variables, `std::string name` and `int age`, and has a constructor that initializes the values of name and age by taking a string and an integer as arguments.
+2.	Class **Zebra** that inherits **Animal** has a member variable, `int numStripes`, and has a constructor that initializes the values of name, age, and numStripes by taking a string, an integer, and an integer as arguments.
+    - The member variable of the parent class is initialized through the constructor of the parent class.
+4.	Class **Cat** that inherits **Animal** has a member variable, `std::string favoriteToy`, and has a constructor that initializes the values of name, age, and favoriteToy by taking a string, an integer, and a string as arguments.
+    - The member variable of the parent class is initialized through the constructor of the parent class.
+5.	Each class has a member function printInfo()
+    - Animal::printInfo() does nothing. make it pure virtual function
+    - Zebra::printInfo() and Cat::printInfo() print out the type, name, age, and number of stripes (or favorite toy) as shown in the following example.
+6.	Create **Zebra** or **Cat** objects according to user input, ant put them into `std::vector<Animal*>` animals.
+7.	When the user enters 0, call the printInfo() function of each element of animals. Each element of animals must be deallocated after use.
+8.	Do not use the type casting operator throughout the code.
+9.	This program should take user input repeatedly
+
+**Input**:
+- z *name*, *age*, *numStripes*
+
+- c *name*, *age*, *favoritToy*
+
+- 0
+
+    print the results and quit the program
+    
+
+
+**Output**:
+
+The result for calling printInfo() functions
+
+
+```c++
+// animal.h
+
+class Animal ...
+class Cat ...
+class Zebra ...
+```
+
+
+```c++
+// animal-main.cc
 
 #include <iostream>
 
