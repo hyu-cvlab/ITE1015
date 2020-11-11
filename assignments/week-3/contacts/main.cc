@@ -13,7 +13,7 @@ int main() {
     assert(contacts.add({2, "name", "phone", "mail"}));
     assert(contacts.add({3, "name", "phone", "mail"}));
 
-    // check exceed
+    // check exceeds
     assert(!contacts.add({0, "name", "phone", "mail"}));
 
     // check remove
