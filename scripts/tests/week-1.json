@@ -11,52 +11,47 @@
             "expect": "exists"
         }, {
             "name": "check-files",
-            "requires": [
-                "check-directory"
-            ],"command": [
+            "requires": "check-directory",
+            "command": [
                 "if [ -f 'main.cc' ]; then echo 'exists'; fi;",
                 "if [ -f 'a.cc' ]; then echo 'exists'; fi;",
                 "if [ -f 'b.cc' ]; then echo 'exists'; fi;",
                 "if [ -f 'a.h' ]; then echo 'exists'; fi;",
                 "if [ -f 'b.h' ]; then echo 'exists'; fi;"
             ],
-            "expect": [
-                "exists", 
-                "exists",
-                "exists",
-                "exists",
-                "exists"
-            ]
+            "expect": "exists"
         }, {
             "name": "check-makefile",
-            "requires": [
-                "check-directory"
-            ],
+            "requires": "check-directory",
             "command": "if [ -f 'Makefile' ]; then echo 'exists'; fi;",
             "expect": "exists"
         }, {
-            "name": "make-clean",
+            "name": "copy",
             "requires": [
                 "check-files",
                 "check-makefile"
-            ],
-            "command": "make clean",
-            "failed": "make-manual-clean"
-        }, {
-            "name": "make-manual-clean",
-            "requires": [
-                "check-files",
-                "check-makefile"
-            ],
-            "command": "rm *.o; rm main;"
+            ], "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp main.cc $temp$",
+                "cp a.cc $temp$",
+                "cp b.cc $temp$",
+                "cp a.h $temp$",
+                "cp b.h $temp$",
+                "cp Makefile $temp$"
+            ]
         }, {
             "name": "make",
-            "requires": ["make-clean"],
-            "command": "make"
+            "requires": "copy",
+            "cwd": "$temp$",
+            "command": "make",
+            "expect": true
         }, {
             "name": "run-execution",
-            "requires": ["make"],
-            "command": "./main"
+            "requires": "make",
+            "cwd": "$temp$",
+            "command": "./main",
+            "expect": true
         }
     ]
 }

@@ -9,34 +9,54 @@
             "command": "if [ -f 'the-starry-night.cc' ]; then echo 'exists'; fi;",
             "expect": "exists"
         }, {
-            "name": "build-a",
+            "name": "copy-a",
             "requires": "exist-a",
-            "command": "g++ the-starry-night.cc -o $temp$/a.out",
-            "expect": ""
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp the-starry-night.cc $temp$"
+            ]
+        }, {
+            "name": "build-a",
+            "requires": "copy-a",
+            "cwd": "$temp$",
+            "command": "g++ the-starry-night.cc -o $temp$/a.out"
         }, {
             "name": "run-a",
             "requires": "build-a",
+            "cwd": "$temp$",
             "command": "for f in $assignments$/a-*.in ; do $temp$/a.out < $f > $temp$/$(basename ${f%.*}.out) ; done"
         }, {
             "name": "check-a",
             "requires": "run-a",
+            "cwd": "$temp$",
             "command": "for f in $assignments$/a-*.out ; do if ! diff $f $temp$/$(basename $f) -q; then echo $(basename $f) wrong; fi; done"
         }, {
             "name": "exist-b",
             "command": "if [ -f 'contacts.cc' ]; then echo 'exists'; fi;",
             "expect": "exists"
         }, {
-            "name": "build-b",
+            "name": "copy-b",
             "requires": "exist-b",
-            "command": "g++ contacts.cc -o $temp$/b.out",
-            "expect": ""
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp contacts.cc $temp$"
+            ]
+        }, {
+            "name": "build-b",
+            "requires": "copy-b",
+            "cwd": "$temp$",
+            "command": "g++ contacts.cc -o $temp$/b.out"
         }, {
             "name": "run-b",
             "requires": "build-b",
+            "cwd": "$temp$",
             "command": "for f in $assignments$/b-*.in ; do $temp$/b.out < $f > $temp$/$(basename ${f%.*}.out) ; done"
         }, {
             "name": "check-b",
             "requires": "run-b",
+            "cwd": "$temp$",
             "command": "for f in $assignments$/b-*.out ; do if ! diff $f $temp$/$(basename $f) -q; then echo $(basename $f) wrong; fi; done"
         }
     ]

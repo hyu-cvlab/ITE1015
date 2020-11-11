@@ -1,0 +1,61 @@
+{
+    "name": "week-10 Assignment",
+    "entry": ["test-0", "test-1", "test-2", "test-3", "test-4"],
+    "globals": {
+        "cwd": "./week-10"
+    }, "commands": [{
+            "name": "exist-week-10-dir",
+            "cwd": "./",
+            "command": "if [ -d 'week-10' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "exist-files",
+            "requires": "exist-week-10-dir",
+            "command": [
+                "if [ -f 'main.cc' ]; then echo 'exists'; fi;",
+                "if [ -f 'shape.h' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }, {
+            "name": "copy",
+            "requires": "exist-files",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests $temp$",
+                "cp main.cc $temp$",
+                "cp shape.h $temp$"
+            ]
+        }, {
+            "name": "build",
+            "requires": "copy",
+            "cwd": "$temp$",
+            "command": "g++ main.cc"
+        }, {
+            "name": "test-0",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./a.out < tests/input0.txt > output0.txt; diff output0.txt tests/output0.txt"
+        }, {
+            "name": "test-1",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./a.out < tests/input1.txt > output1.txt; diff output1.txt tests/output1.txt"
+        }, {
+            "name": "test-2",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./a.out < tests/input2.txt > output2.txt; diff output2.txt tests/output2.txt"
+        }, {
+            "name": "test-3",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./a.out < tests/input3.txt > output3.txt; diff output3.txt tests/output3.txt"
+        }, {
+            "name": "test-4",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./a.out < tests/input4.txt > output4.txt; diff output4.txt tests/output4.txt"
+        }
+    ]
+}

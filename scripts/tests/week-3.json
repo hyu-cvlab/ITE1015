@@ -19,9 +19,11 @@
             "name": "directory-mismatch",
             "cwd": "./week-3",
             "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
                 "cp -r $assignments$/* $temp$",
                 "cp contacts.cc $temp$",
-                "cp contacts.h $temp$"
+                "cp contacts.h $temp$"                
             ]
         }, {
             "name": "exist-files",
@@ -37,6 +39,8 @@
             "name": "copy",
             "requires": "exist-files",
             "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
                 "cp -r $assignments$/* $temp$",
                 "cp contacts.cc $temp$",
                 "cp contacts.h $temp$"
@@ -46,7 +50,7 @@
             "requires": "copy",
             "cwd": "$temp$",
             "command": "make all",
-            "pass": true
+            "expect": true
         }, {
             "name": "test-add",
             "requires": "make",

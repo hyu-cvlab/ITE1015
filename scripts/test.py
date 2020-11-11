@@ -1,8 +1,7 @@
-from typing import List, Tuple, Any, Union
+from typing import List, Tuple, Any, Union, Dict
 import argparse
 from pathlib import Path
 from functools import partial
-from collections import Counter
 from multiprocessing import Pool
 import subprocess
 import json
@@ -41,7 +40,7 @@ class Test:
         self.requires = []
         self.command = []
         self.failed = []
-        self.expect = None
+        self.expect = False
 
         self.verbose = verbose
         self.__dict__.update(test)
@@ -77,27 +76,27 @@ class Test:
             -> Tuple[str, str]:
 
         command, expect = command_expect
-        status, message = 'pass', ''
+        status, message = True, ''
         try:
             process = subprocess.Popen(command, cwd=getattr(self, 'cwd', ''), shell=True,
                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             outs, errs = process.communicate(timeout=30)
-            outs, errs = outs.decode('utf-8'), errs.decode('utf-8')
+            outs, errs = outs.decode('utf-8').strip(), errs.decode('utf-8').strip()
 
         except Exception as e:
             outs, errs = 'failed', str(e)
 
-        if expect is None:
-            if hasattr(self, 'pass') and getattr(self, 'pass', False):
-                status = 'pass'
+        if isinstance(expect, bool):
+            if expect and outs:
+                message = outs
+            elif not expect and not outs:
+                pass
             else:
-                status = 'failed' if outs else 'pass'
-
-            message = outs or errs
-            
-        elif errs or outs.strip() != expect.strip():
-            status = 'failed'
-            message = errs
+                status, message = False, f'Error in progress, {outs}//{errs}'
+        elif expect == outs:
+            message = outs
+        else:
+            status, message = False, f'Expect "{expect}" but got "{outs}"'
         
         return status, message
 
@@ -127,7 +126,8 @@ class TestManager:
         if not isinstance(self.entry, list):
             self.entry = [self.entry]
 
-        self.results = {test: None for test in self.tests}
+        self.results: Dict[Test, Tuple[Tuple[bool, str]]]\
+            = {test: None for test in self.tests}
 
         if verbose:
             print(f'Test: {self.name} is loaded')
@@ -144,12 +144,16 @@ class TestManager:
             self.results[test.name] = tuple(test.run())
 
             status, *_ = zip(*self.results[test.name])
-            if not all(state == 'pass' or state == '' for state in status):
+            if not all(status):
                 any(map(self.run_handler, test.failed))
 
     def run(self, *args, **kwargs)\
             -> List[str]:
         any(map(self.run_handler, self.entry))
+
+        for test, val in self.results.items():
+            if val is None:
+                self.results[test] = ((True, ), ('not-require', ))
 
         return self.results
 
