@@ -1,0 +1,2 @@
+StudentId,exist-week-10-dir,exist-files,copy,build,test-0,test-1,test-2,test-3,test-4
+2019170229,"((True,), ('exists',))","((True, True), ('exists', 'exists'))","((True, True, True, True, True), ('', '', '', '', ''))","((True,), ('',))","((True,), ('',))","((True,), ('',))","((True,), ('',))","((True,), ('',))","((True,), ('',))"

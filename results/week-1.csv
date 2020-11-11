@@ -1,2 +1,2 @@
-StudentId,check-directory,check-files,check-makefile,make-clean,make-manual-clean,make,run-execution
-2019170229,"(('failed',), ('',))","(('pass', 'pass', 'pass', 'pass', 'pass'), ('', '', '', '', ''))","(('pass',), ('',))","(('failed',), ('rm *.o main\n',))",,"(('failed',), ('g++ -c -o a.o a.cc\ng++ -c -o b.o b.cc\ng++ -c -o main.o main.cc\ng++ -o main a.o b.o main.o\n',))","(('failed',), ('function a called!\nfunction b is changed!\n',))"
+StudentId,check-directory,check-files,check-makefile,copy,make,run-execution
+2019170229,"((True,), ('exists',))","((True, True, True, True, True), ('exists', 'exists', 'exists', 'exists', 'exists'))","((True,), ('exists',))","((True, True, True, True, True, True, True, True), ('', '', '', '', '', '', '', ''))","((True,), ('g++ -c -o a.o a.cc\ng++ -c -o b.o b.cc\ng++ -c -o main.o main.cc\ng++ -o main a.o b.o main.o',))","((True,), ('function a called!\nfunction b is changed!',))"
