@@ -1,0 +1,2 @@
+class Utils:
+    config = None
