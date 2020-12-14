@@ -1,0 +1,48 @@
+1
+a
+3
+a 1 a 1
+b 2 a 1
+c 3 a 1
+9
+student s1 1 a
+student s2 2 a
+student s3 3 a
+professor p1 4 a
+professor p2 5 a
+professor p3 6 a
+professor p4 7 a
+employee e1 8 a
+employee e2 9 a
+31
+enter 1 1
+enter 2 1
+enter 3 1
+enter 4 1
+enter 5 1
+enter 6 1
+enter 7 1
+enter 8 1
+enter 9 1
+attendance 1
+attendance 4
+attendance 5
+attendance 6
+attendance 8
+all 1
+total 1
+total 2
+total 3
+clean 1
+clean 4
+clean 8
+all 1
+total 1
+attendance 1
+attendance 4
+attendance 5
+attendance 6
+attendance 8
+exit 1 1
+exit 4 1
+exit 8 1
