@@ -1,0 +1,60 @@
+{
+    "name": "week-14 Assignment",
+    "entry": ["test-0", "test-1", "test-2"],
+    "globals": {
+        "cwd": "./week-14"
+    }, "commands": [{
+            "name": "exist-week-14-dir",
+            "cwd": "./",
+            "command": "if [ -d 'week-14' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "exist-files",
+            "requires": "exist-week-14-dir",
+            "command": [
+                "if [ -f 'main.cc' ]; then echo 'exists'; fi;",
+                "if [ -f 'CMakeLists.txt' ]; then echo 'exists'; fi;",
+                "if [ -f 'include/screen.hpp' ]; then echo 'exists'; fi;",
+                "if [ -f 'include/utility.hpp' ]; then echo 'exists'; fi;",
+                "if [ -f 'src/screen.cc' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }, {
+            "name": "copy",
+            "requires": "exist-files",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests $temp$",
+                "cp CMakeLists.txt $temp$",
+                "cp main.cc $temp$",
+                "cp -r include $temp$",
+                "cp -r src $temp$"
+            ]
+        }, {
+            "name": "build",
+            "requires": "copy",
+            "cwd": "$temp$",
+            "command": "cmake .; make",
+            "expect": true
+        }, {
+            "name": "test-0",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./main < tests/input0.txt > output0.txt;diff output0.txt tests/output0.txt",
+            "expect": false
+        }, {
+            "name": "test-1",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./main < tests/input1.txt > output1.txt;diff output1.txt tests/output1.txt",
+            "expect": false
+        }, {
+            "name": "test-2",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./main < tests/input2.txt > output2.txt;diff output2.txt tests/output2.txt",
+            "expect": false
+        }
+    ]
+}

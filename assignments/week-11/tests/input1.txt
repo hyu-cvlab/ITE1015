@@ -1,0 +1,151 @@
+1
+a
+3
+a 1 a 1
+b 2 a 1
+c 3 a 1
+16
+student s1 1 a
+student s2 2 a
+student s3 3 a
+student s4 4 a
+student s5 5 a
+student s6 6 a
+professor p1 7 a
+professor p2 8 a
+professor p3 9 a
+professor p4 10 a
+professor p6 11 a
+professor p7 12 a
+professor p8 13 a
+professor p9 14 a
+employee e1 15 a
+employee e2 16 a
+127
+enter 1 1
+enter 2 1
+enter 3 1
+enter 4 1
+enter 5 1
+enter 6 1
+enter 7 1
+enter 8 1
+enter 9 1
+enter 10 1
+enter 11 1
+enter 12 1
+enter 13 1
+enter 14 1
+enter 15 1
+enter 16 1
+exit 1 1
+exit 2 1
+exit 3 1
+exit 4 1
+exit 5 1
+exit 6 1
+exit 7 1
+exit 8 1
+exit 9 1
+exit 10 1
+exit 11 1
+exit 12 1
+exit 13 1
+exit 14 1
+exit 15 1
+exit 16 1
+enter 1 2
+enter 2 2
+enter 3 2
+enter 4 2
+enter 5 2
+enter 6 2
+enter 7 2
+enter 8 2
+enter 9 2
+enter 10 2
+enter 11 2
+enter 12 2
+enter 13 2
+enter 14 2
+enter 15 2
+enter 16 2
+enter 1 3
+enter 2 3
+enter 3 3
+enter 4 3
+enter 5 3
+enter 6 3
+enter 7 3
+enter 8 3
+enter 9 3
+enter 10 3
+enter 11 3
+enter 12 3
+enter 13 3
+enter 14 3
+enter 15 3
+enter 16 3
+attendance 1
+attendance 2
+attendance 3
+attendance 4
+attendance 5
+attendance 6
+attendance 7
+attendance 8
+attendance 9
+attendance 10
+attendance 11
+attendance 12
+attendance 13
+attendance 14
+attendance 15
+attendance 16
+all 1
+all 2
+all 3
+total 1
+total 2
+total 3
+clean 1
+clean 2
+clean 3
+clean 4
+clean 5
+clean 6
+clean 7
+clean 8
+clean 9
+clean 10
+clean 11
+clean 12
+clean 13
+clean 14
+clean 15
+clean 16
+all 1
+all 2
+all 3
+total 1
+total 2
+total 3
+attendance 1
+attendance 2
+attendance 3
+attendance 4
+attendance 5
+attendance 6
+attendance 7
+attendance 8
+attendance 9
+attendance 10
+attendance 11
+attendance 12
+attendance 13
+attendance 14
+attendance 15
+attendance 16
+exit 1 1
+exit 4 1
+exit 8 1

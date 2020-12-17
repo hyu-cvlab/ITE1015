@@ -1,0 +1,131 @@
+{
+    "name": "week-6 Assignment",
+    "entry": ["test-1-basic", "test-1-ext", "test-2-basic", "test-2-ext"],
+    "globals": {
+        "cwd": "./week-6"
+    }, "commands": [{
+            "name": "exist-week-6-dir",
+            "cwd": "./",
+            "command": "if [ -d 'week-6' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "exist-files-1",
+            "requires": "exist-week-6-dir",
+            "command": [
+                "if [ -f 'node.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'list.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'CMakeLists.txt' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }, {
+            "name": "copy-1-basic",
+            "requires": "exist-files-1",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests/p1-basic.cc $temp$/main.cc",
+                "cp node.h $temp$",
+                "cp list.h $temp$",
+                "sed -i 's/new Node<T>(0,/new Node<T>({},/' $temp$/list.h",
+                "cp CMakeLists.txt $temp$"
+            ]
+        }, {
+            "name": "build-1-basic",
+            "requires": "copy-1-basic",
+            "cwd": "$temp$",
+            "command": [
+                "cmake .",
+                "make"
+            ]
+        }, {
+            "name": "test-1-basic",
+            "requires": "build-1-basic",
+            "cwd": "$temp$",
+            "command": "./main"
+        }, {
+            "name": "copy-1-ext",
+            "requires": "exist-files-1",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests/p1-ext.cc $temp$/main.cc",
+                "cp node.h $temp$",
+                "cp list.h $temp$",
+                "sed -i 's/new Node<T>(0,/new Node<T>({},/' $temp$/list.h",
+                "cp CMakeLists.txt $temp$"
+            ]
+        }, {
+            "name": "build-1-ext",
+            "requires": "copy-1-ext",
+            "cwd": "$temp$",
+            "command": [
+                "cmake .",
+                "make"
+            ]
+        }, {
+            "name": "test-1-ext",
+            "requires": "build-1-ext",
+            "cwd": "$temp$",
+            "command": "./main"
+        }, {
+            "name": "exist-files-2",
+            "requires": "exist-week-6-dir",
+            "command": [
+                "if [ -f 'double_linked_node.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'double_linked_list.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'CMakeLists.txt' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }, {
+            "name": "copy-2-basic",
+            "requires": "exist-files-2",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests/p2-basic.cc $temp$/main.cc",
+                "cp double_linked_node.h $temp$",
+                "cp double_linked_list.h $temp$",
+                "sed -i 's/new Node<T>(0,/new Node<T>({},/' $temp$/double_linked_list.h",
+                "cp CMakeLists.txt $temp$"
+            ]
+        }, {
+            "name": "build-2-basic",
+            "requires": "copy-2-basic",
+            "cwd": "$temp$",
+            "command": [
+                "cmake .",
+                "make"
+            ]
+        }, {
+            "name": "test-2-basic",
+            "requires": "build-2-basic",
+            "cwd": "$temp$",
+            "command": "./main"
+        }, {
+            "name": "copy-2-ext",
+            "requires": "exist-files-2",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests/p2-ext.cc $temp$/main.cc",
+                "cp double_linked_node.h $temp$",
+                "cp double_linked_list.h $temp$",
+                "sed -i 's/new Node<T>(0,/new Node<T>({},/' $temp$/double_linked_list.h",
+                "cp CMakeLists.txt $temp$"
+            ]
+        }, {
+            "name": "build-2-ext",
+            "requires": "copy-2-ext",
+            "cwd": "$temp$",
+            "command": [
+                "cmake .",
+                "make"
+            ]
+        }, {
+            "name": "test-2-ext",
+            "requires": "build-2-ext",
+            "cwd": "$temp$",
+            "command": "./main"
+        }
+    ]
+}

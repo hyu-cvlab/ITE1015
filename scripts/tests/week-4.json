@@ -1,0 +1,67 @@
+{
+    "name": "week-4 Assignment",
+    "entry": ["test-1", "test-2"],
+    "globals": {
+        "cwd": "./week-4"
+    }, "commands": [{
+            "name": "exist-week-4-dir",
+            "cwd": "./",
+            "command": "if [ -d 'week-4' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "exist-files-1",
+            "requires": "exist-week-4-dir",
+            "command": [
+                "if [ -f 'problem1.cc' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }, {
+            "name": "copy-1",
+            "requires": "exist-files-1",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests $temp$",
+                "cp problem1.cc $temp$/problem1.h",
+                "sed -i 's/main/main_back/' $temp$/problem1.h"
+            ]
+        }, {
+            "name": "build-1",
+            "requires": "copy-1",
+            "cwd": "$temp$",
+            "command": "g++ tests/p1.cc -o p1.out"
+        }, {
+            "name": "test-1",
+            "requires": "build-1",
+            "cwd": "$temp$",
+            "command": "./p1.out"
+        }, {
+            "name": "exist-files-2",
+            "requires": "exist-week-4-dir",
+            "command": [
+                "if [ -f 'problem2.cc' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }, {
+            "name": "copy-2",
+            "requires": "exist-files-2",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests $temp$",
+                "cp problem2.cc $temp$/problem2.h",
+                "sed -i 's/main/main_back/' $temp$/problem2.h"
+            ]
+        }, {
+            "name": "build-2",
+            "requires": "copy-2",
+            "cwd": "$temp$",
+            "command": "g++ tests/p2.cc -o p2.out"
+        }, {
+            "name": "test-2",
+            "requires": "build-2",
+            "cwd": "$temp$",
+            "command": "./p2.out"
+        }
+    ]
+}

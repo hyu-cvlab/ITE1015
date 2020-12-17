@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
+project(ITE1015-week12)
+set (CMAKE_CXX_STANDARD 17)
+
+file( GLOB APP_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cc )
+foreach( sourcefile ${APP_SOURCES} )
+    file(RELATIVE_PATH filename ${CMAKE_CURRENT_SOURCE_DIR} ${sourcefile})
+    string( REPLACE ".cc" "" file ${filename} )
+    string( REPLACE "tests/" "" file ${file} )
+    add_executable( ${file} ${sourcefile} )
+endforeach( sourcefile ${APP_SOURCES} )

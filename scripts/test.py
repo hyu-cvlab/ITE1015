@@ -35,14 +35,13 @@ def variable_inject(obj: Union[object, dict], tar: str)\
     return target
 
 class Test:
-    def __init__(self, test: dict, variable: dict, verbose: bool = True):
+    def __init__(self, test: dict, variable: dict):
         self.name = 'test-name'
         self.requires = []
         self.command = []
         self.failed = []
         self.expect = False
 
-        self.verbose = verbose
         self.__dict__.update(test)
 
         self.requires = self.package(self.requires)
@@ -89,7 +88,7 @@ class Test:
         if isinstance(expect, bool):
             if expect and outs:
                 message = outs
-            elif not expect and not outs:
+            elif not expect and not outs and not errs:
                 pass
             else:
                 status, message = False, f'Error in progress, {outs}//{errs}'
@@ -98,19 +97,16 @@ class Test:
         else:
             status, message = False, f'Expect "{expect}" but got "{outs}"'
         
-        return status, message
+        return status, message.replace(',', '')[:1024]
 
     def run(self, *args, **kwargs)\
             -> Tuple[List[str], List[str]]:
-
-        if self.verbose:
-            print(f'Test run: {self.name}')
 
         return zip(*map(self.run_handler, zip(self.command, self.expect)))
 
 
 class TestManager:
-    def __init__(self, file: str, variable: dict, verbose: bool = True):
+    def __init__(self, file: str, variable: dict):
         self.file = file
         with open(self.file) as f:
             self.content = json.load(f)
@@ -120,7 +116,7 @@ class TestManager:
                     for key, value in variable.items()}
 
         self.tests = {test.name: test for test in 
-                      [Test(t, variable, verbose=verbose) 
+                      [Test(t, variable) 
                        for t in self.content.get('commands', [])]}
         self.entry = self.content.get('entry', self.tests)
         if not isinstance(self.entry, list):
@@ -128,10 +124,6 @@ class TestManager:
 
         self.results: Dict[Test, Tuple[Tuple[bool, str]]]\
             = {test: None for test in self.tests}
-
-        if verbose:
-            print(f'Test: {self.name} is loaded')
-            print(f'Test includes {len(self.tests)} tests')
 
     def run_handler(self, test: Test)\
             -> Tuple[int, str]:
@@ -170,7 +162,7 @@ def test(student_id, test: None, path: Path = None)\
         'path_prefix': f'{path}/$uid$',
         'cwd': f'$path_prefix$/$cwd$',
         'temp': str(temp.absolute()),
-    }, verbose=False).run()
+    }).run()
 
     return student_id, results
 

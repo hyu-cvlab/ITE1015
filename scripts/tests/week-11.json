@@ -1,0 +1,53 @@
+{
+    "name": "week-11 Assignment",
+    "entry": ["test-0", "test-1"],
+    "globals": {
+        "cwd": "./week-11"
+    }, "commands": [{
+            "name": "exist-week-11-dir",
+            "cwd": "./",
+            "command": "if [ -d 'week-11' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "exist-files",
+            "requires": "exist-week-11-dir",
+            "command": [
+                "if [ -f 'main.cc' ]; then echo 'exists'; fi;",
+                "if [ -f 'building.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'college.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'user.h' ]; then echo 'exists'; fi;",
+                "if [ -f 'CMakeLists.txt' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }, {
+            "name": "copy",
+            "requires": "exist-files",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests $temp$",
+                "cp main.cc $temp$",
+                "cp building.h $temp$",
+                "cp college.h $temp$",
+                "cp user.h $temp$",
+                "cp CMakeLists.txt $temp$",
+                "cp $assignments$/utility.h $temp$"
+            ]
+        }, {
+            "name": "build",
+            "requires": "copy",
+            "cwd": "$temp$",
+            "command": "g++ main.cc -o main"
+        }, {
+            "name": "test-0",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./main < tests/input0.txt > output0.txt;diff output0.txt tests/output0.txt"
+        }, {
+            "name": "test-1",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./main < tests/input1.txt > output1.txt;diff output1.txt tests/output1.txt"
+        }
+    ]
+}

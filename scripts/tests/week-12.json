@@ -1,0 +1,48 @@
+{
+    "name": "week-12 Assignment",
+    "entry": ["test-basic", "test-stream"],
+    "globals": {
+        "cwd": "./week-12"
+    }, "commands": [{
+            "name": "exist-week-12-dir",
+            "cwd": "./",
+            "command": "if [ -d 'week-12' ]; then echo 'exists'; fi;",
+            "expect": "exists"
+        }, {
+            "name": "exist-files",
+            "requires": "exist-week-12-dir",
+            "command": [
+                "if [ -f 'vector.h' ]; then echo 'exists'; fi;"
+            ],
+            "expect": "exists"
+        }, {
+            "name": "copy",
+            "requires": "exist-files",
+            "command": [
+                "sudo rm -r $temp$",
+                "mkdir $temp$",
+                "cp -r $assignments$/tests $temp$",
+                "cp $assignments$/CMakeLists.txt $temp$",
+                "cp vector.* $temp$"
+            ]
+        }, {
+            "name": "build",
+            "requires": "copy",
+            "cwd": "$temp$",
+            "command": "cmake .;make test-0;make test-1",
+            "expect": true
+        }, {
+            "name": "test-basic",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./test-0",
+            "expect": false
+        }, {
+            "name": "test-stream",
+            "requires": "build",
+            "cwd": "$temp$",
+            "command": "./test-1",
+            "expect": false
+        }
+    ]
+}
